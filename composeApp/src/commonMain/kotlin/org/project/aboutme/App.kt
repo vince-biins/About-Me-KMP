@@ -10,7 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.project.aboutme.base.theme.AboutMeTheme
+import com.project.theme.AboutMeTheme
+
 
 @Composable
 fun App() {

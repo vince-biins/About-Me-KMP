@@ -1,4 +1,4 @@
-package org.project.aboutme.base.theme
+package com.project.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
