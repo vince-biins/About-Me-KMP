@@ -1,25 +1,25 @@
 package org.project.aboutme
 
+import aboutme.composeapp.generated.resources.Res
+import aboutme.composeapp.generated.resources.compose_multiplatform
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.project.theme.AboutMeTheme
+//import com.project.composables.buttons.RoundedCornerButton
+
 
 
 @Composable
 fun App() {
-    AboutMeTheme(darkTheme = true) {
+    MaterialTheme {
         Column(
-            modifier = Modifier.padding(16.dp).fillMaxSize().background(
-                MaterialTheme.colorScheme.background
-            )
+            modifier = Modifier.padding(16.dp).fillMaxSize()
         ) {
             Text(
                 text = "This is a Headline Large",
@@ -36,9 +36,21 @@ fun App() {
                 style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            Button(onClick = { /* Handle click */ }) {
-                Text("Click Me")
-            }
+//            RoundedCornerButton(
+//                text = "Download CV",
+//                onClick = {},
+//
+//
+//            )
+
+//            RoundedCornerButton(
+//                text = "Email",
+//                onClick = {},
+//                suffixIcon = Res.drawable.compose_multiplatform,
+//                iconTint = MaterialTheme.colorScheme.tertiary,
+//               backgroundColor =  MaterialTheme.colorScheme.background
+//            )
         }
     }
 }
+
