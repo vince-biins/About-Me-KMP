@@ -13,9 +13,6 @@ android  {
     defaultConfig {
         minSdk = 24
     }
-    defaultConfig {
-        minSdk = 24
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -49,7 +46,7 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
-        binaries.executable()
+
     }
     iosX64 {
         binaries.framework {
@@ -72,6 +69,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+
                 implementation(libs.kotlin.stdlib)
                 implementation(compose.material3)
                 implementation(compose.ui)

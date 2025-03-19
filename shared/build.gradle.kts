@@ -16,7 +16,6 @@ kotlin {
         }
     }
 
-
     cocoapods {
         summary = "Umbrella module for shared code."
         homepage = "Your homepage"
@@ -26,7 +25,7 @@ kotlin {
         framework {
             baseName = "shared"
             export(project(":base:theme"))
-         //   export(project(":base:composables"))
+            export(project(":base:composables"))
 
             @OptIn(ExperimentalKotlinGradlePluginApi::class)
             transitiveExport = true
@@ -38,8 +37,8 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
-        binaries.executable()
     }
+
     iosX64 {
         binaries.framework {
             baseName = xcfName
@@ -61,14 +60,14 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(project(":base:theme"))
-        //    api(project(":base:composables"))
-
+            api(project(":base:composables"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
     }
 }
+
 android {
     namespace = "org.project.aboutme"
     compileSdk = 35
