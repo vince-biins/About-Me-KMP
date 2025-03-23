@@ -29,3 +29,7 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
+include(":shared")
+include(":feature:home")
+include(":base:theme")
+include(":base:composables")

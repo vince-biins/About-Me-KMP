@@ -1,10 +1,9 @@
-package org.project.aboutme.base.theme
+package com.project.theme
 
-
-import aboutme.composeapp.generated.resources.Poppins_Bold
-import aboutme.composeapp.generated.resources.Poppins_Medium
-import aboutme.composeapp.generated.resources.Poppins_Regular
-import aboutme.composeapp.generated.resources.Res
+import aboutme.base.theme.generated.resources.Poppins_Bold
+import aboutme.base.theme.generated.resources.Poppins_Medium
+import aboutme.base.theme.generated.resources.Poppins_Regular
+import aboutme.base.theme.generated.resources.Res
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle

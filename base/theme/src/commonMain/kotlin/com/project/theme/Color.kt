@@ -1,7 +1,7 @@
-package org.project.aboutme.base.theme
+package com.project.theme
 import androidx.compose.ui.graphics.Color
 
-val primaryLight = Color(0xFF825513)
+val primaryLight = Color(0xFFFCA311)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFFFDDB8)
 val onPrimaryContainerLight = Color(0xFF653E00)
@@ -109,7 +109,7 @@ val surfaceContainerLightHighContrast = Color(0xFFDEE3E6)
 val surfaceContainerHighLightHighContrast = Color(0xFFD0D5D8)
 val surfaceContainerHighestLightHighContrast = Color(0xFFC2C7CA)
 
-val primaryDark = Color(0xFFF8BB71)
+val primaryDark = Color(0xFFFCA311)
 val onPrimaryDark = Color(0xFF472A00)
 val primaryContainerDark = Color(0xFF653E00)
 val onPrimaryContainerDark = Color(0xFFFFDDB8)

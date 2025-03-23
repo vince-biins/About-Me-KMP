@@ -1,43 +1,34 @@
 package org.project.aboutme
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import org.project.aboutme.base.theme.AboutMeTheme
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.project.home.di.homeModule
+import com.project.home.presentation.navigation.HomeRoute
+import com.project.home.presentation.navigation.homeRoute
+import com.project.theme.AboutMeTheme
+import org.koin.compose.KoinApplication
 
 @Composable
 fun App() {
-    AboutMeTheme(darkTheme = true) {
-        Column(
-            modifier = Modifier.padding(16.dp).fillMaxSize().background(
-                MaterialTheme.colorScheme.background
+    KoinApplication(
+        application = {
+            modules(
+                homeModule
             )
-        ) {
-            Text(
-                text = "This is a Headline Large",
-
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = "This is a Body Medium",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = "This is a Title Small",
-                style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-            Button(onClick = { /* Handle click */ }) {
-                Text("Click Me")
-            }
         }
+    ) {
+        AboutMeTheme {
+            val navController = rememberNavController()
+            createNavGraph(navController = navController)
+        }
+    }
+}
+
+@Composable
+fun createNavGraph(navController: NavHostController) {
+    NavHost(navController = navController, startDestination = HomeRoute) {
+        homeRoute(navController)
     }
 }
