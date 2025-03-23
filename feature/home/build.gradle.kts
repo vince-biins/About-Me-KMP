@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinSerialization)
 }
 android  {
 
@@ -72,8 +73,10 @@ kotlin {
                 api(libs.koin.core)
                 implementation(libs.koin.compose)
                 implementation(libs.koin.compose.viewmodel)
-                implementation(libs.navigation.compose)
+
                 implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.navigation.compose)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
 

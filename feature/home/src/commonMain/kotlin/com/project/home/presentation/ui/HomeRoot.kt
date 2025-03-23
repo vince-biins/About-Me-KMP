@@ -1,41 +1,70 @@
 package com.project.home.presentation.ui
 
-import aboutme.feature.home.generated.resources.Res
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.project.composables.buttons.RoundedCornerButton
+import androidx.navigation.NavController
+import com.project.home.domain.model.Profile
+import com.project.home.presentation.viewmodel.HomeViewModel
 
 @Composable
-fun HomeRoot() {
+fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
+
+    val state by viewModel.state.collectAsState()
     Column(
-        modifier = Modifier.padding(16.dp).fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "This is a Headline Large",
 
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        Text(
-            text = "This is a Body Medium",
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        Text(
-            text = "This is a Title Small",
-            style = MaterialTheme.typography.titleSmall,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
+        if (state.isLoading) {
+            CircularProgressIndicator()
+            Text(text = "Loading...", modifier = Modifier.padding(top = 8.dp))
+        }
 
-        RoundedCornerButton(
-            text = "Email",
-            onClick = {},
-            iconTint = MaterialTheme.colorScheme.tertiary,
-             )
+
+        if (state.error != null) {
+            Text(
+                text = state.error!!,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+
+        if (state.profile != null) {
+            HomeScreen(profile = state.profile!!)
+        }
     }
+}
+
+@Composable
+fun HomeScreen(profile: Profile) {
+    Column {
+        Text(
+            text = profile.basicProfile.headerTitle,
+            style = MaterialTheme.typography.headlineLarge
+        )
+        Text(
+            text = profile.basicProfile.headerSubtitle,
+        )
+        Text(
+            text = profile.toString()
+        )
+    }
+}
+
+@Composable
+fun HomeContent() {
+
 }
