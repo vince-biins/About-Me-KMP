@@ -25,7 +25,7 @@ kotlin {
         framework {
             baseName = "shared"
             export(project(":base:theme"))
-            export(project(":base:composables"))
+            export(project(":feature:home"))
 
             @OptIn(ExperimentalKotlinGradlePluginApi::class)
             transitiveExport = true
@@ -60,7 +60,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(project(":base:theme"))
-            api(project(":base:composables"))
+            api(project(":feature:home"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

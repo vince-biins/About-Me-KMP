@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlinCocoapods)
+//    alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidLibrary)
 }
 android  {
@@ -28,17 +28,17 @@ kotlin {
         }
     }
 
-    cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        version = "1.0"
-        ios.deploymentTarget = "16.0"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
-            baseName = "theme"
-            isStatic = true
-        }
-    }
+//    cocoapods {
+//        summary = "Some description for the Shared Module"
+//        homepage = "Link to the Shared Module homepage"
+//        version = "1.0"
+//        ios.deploymentTarget = "16.0"
+//        podfile = project.file("../iosApp/Podfile")
+//        framework {
+//            baseName = "theme"
+//            isStatic = true
+//        }
+//    }
 
 
     val xcfName = "baseThemeKit"
