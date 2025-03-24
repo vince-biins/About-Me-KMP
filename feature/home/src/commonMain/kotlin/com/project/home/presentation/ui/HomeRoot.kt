@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -15,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.project.home.domain.model.Profile
+import com.project.home.presentation.components.HeaderSection
+import com.project.home.presentation.components.IntroSection
 import com.project.home.presentation.viewmodel.HomeViewModel
 
 @Composable
@@ -23,8 +26,7 @@ fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
     val state by viewModel.state.collectAsState()
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -43,28 +45,65 @@ fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
         }
 
         if (state.profile != null) {
-            HomeScreen(profile = state.profile!!)
+            HomeScreen(
+                profile = state.profile!!,
+                onHomeClicked = {},
+                onContactClicked = {},
+                onAboutClicked = {},
+                onSkillsClicked = {},
+                onExperienceClicked = {},
+            )
         }
     }
 }
 
 @Composable
-fun HomeScreen(profile: Profile) {
-    Column {
-        Text(
-            text = profile.basicProfile.headerTitle,
-            style = MaterialTheme.typography.headlineLarge
-        )
-        Text(
-            text = profile.basicProfile.headerSubtitle,
-        )
-        Text(
-            text = profile.toString()
+fun HomeScreen(
+    profile: Profile,
+    onHomeClicked: () -> Unit,
+    onAboutClicked: () -> Unit,
+    onExperienceClicked: () -> Unit,
+    onSkillsClicked: () -> Unit,
+    onContactClicked: () -> Unit,
+) {
+    Scaffold() { innerPadding ->
+        HomeContent(
+            profile = profile,
+            modifier = Modifier.padding(innerPadding),
+            onHomeClicked = onHomeClicked,
+            onAboutClicked = onAboutClicked,
+            onContactClicked = onContactClicked,
+            onExperienceClicked = onExperienceClicked,
+            onSkillsClicked = onSkillsClicked
         )
     }
 }
 
 @Composable
-fun HomeContent() {
+fun HomeContent(
+    profile: Profile,
+    modifier: Modifier = Modifier,
+    onHomeClicked: () -> Unit,
+    onAboutClicked: () -> Unit,
+    onExperienceClicked: () -> Unit,
+    onSkillsClicked: () -> Unit,
+    onContactClicked: () -> Unit,
+) {
+    Column {
+        HeaderSection(
+            onHomeClicked = onHomeClicked,
+            onAboutClicked = onAboutClicked,
+            onContactClicked = onContactClicked,
+            onExperienceClicked = onExperienceClicked,
+            onSkillsClicked = onSkillsClicked
+        )
+
+        IntroSection(
+            superHeading = "Hello",
+            mainHeading = profile.basicProfile.headerTitle,
+            subHeading = profile.basicProfile.headerSubtitle,
+            onClickIntroAbout = {},
+        )
+    }
 
 }

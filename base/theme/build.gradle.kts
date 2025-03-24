@@ -69,7 +69,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-
+                implementation(libs.material3.window.size.class1.multiplatform)
                 implementation(libs.kotlin.stdlib)
                 implementation(compose.material3)
                 implementation(compose.ui)

@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinSerialization)
 }
+
 android  {
 
     namespace = "com.project.composables"
@@ -61,6 +62,7 @@ kotlin {
             dependencies {
 
                 implementation(project(":base:composables"))
+                implementation(project(":base:theme"))
 
                 implementation(libs.kotlin.stdlib)
                 // Add KMP dependencies here
@@ -69,7 +71,6 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.ui)
                 implementation(compose.components.resources)
-
                 api(libs.koin.core)
                 implementation(libs.koin.compose)
                 implementation(libs.koin.compose.viewmodel)

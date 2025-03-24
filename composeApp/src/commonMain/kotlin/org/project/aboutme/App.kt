@@ -19,7 +19,7 @@ fun App() {
             )
         }
     ) {
-        AboutMeTheme {
+        AboutMeTheme (darkTheme = true) {
             val navController = rememberNavController()
             createNavGraph(navController = navController)
         }
