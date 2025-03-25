@@ -59,6 +59,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(project(":base:theme"))
                 implementation(libs.kotlin.stdlib)
                 implementation(compose.material3)
                 implementation(compose.ui)

@@ -69,6 +69,7 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
+                implementation(libs.material3.window.size.class1.multiplatform)
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 api(libs.koin.core)

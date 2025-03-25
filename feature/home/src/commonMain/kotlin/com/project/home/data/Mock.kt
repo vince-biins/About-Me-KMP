@@ -28,7 +28,7 @@ internal object Mock {
 
     val background = listOf<BackgroundDto>(
         BackgroundDto(
-            headerTitle = "Professional Journey",
+            headerTitle = "Work Experience",
             experience = listOf<ExperienceDto>(
                 ExperienceDto(
                     imageUrl = "",

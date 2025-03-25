@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.project.theme.appTheme
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -45,12 +46,10 @@ fun RoundedCornerButton(
             .padding(8.dp)
             .clip(shape)
             .background(backgroundColor)
-
-
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyLarge.copy(
+            style = appTheme.responsiveTypography.bodyLarge.copy(
                 color = Color.White,
                 fontWeight = fontWeight,
                 letterSpacing = 2.sp
