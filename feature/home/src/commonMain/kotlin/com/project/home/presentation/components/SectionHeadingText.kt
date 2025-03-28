@@ -16,7 +16,7 @@ fun SectionHeadingText(
         text = title,
         style = appTheme.responsiveTypography.headlineMedium.copy(
             color = MaterialTheme.colorScheme.tertiary,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.ExtraBold
         )
     )
 }

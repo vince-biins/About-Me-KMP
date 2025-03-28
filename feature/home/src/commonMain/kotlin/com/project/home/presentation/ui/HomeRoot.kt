@@ -29,8 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.project.home.domain.model.Profile
+import com.project.home.presentation.components.ContactSection
 import com.project.home.presentation.components.DetailsSection
 import com.project.home.presentation.components.ExperienceSection
+import com.project.home.presentation.components.FooterSection
 import com.project.home.presentation.components.HeaderSection
 import com.project.home.presentation.components.IntroSection
 import com.project.home.presentation.components.SkillSection
@@ -150,6 +152,22 @@ fun HomeContent(
             title = "Expertise",
             windowSize = windowSize,
             expertise = profile.skills
+        )
+        Spacer(Modifier.height(32.dp))
+        ContactSection(
+            title = "Connect To ME",
+            windowSize = windowSize,
+            onContactClicked = {},
+            contacts = profile.contact
+        )
+        Spacer(Modifier.height(32.dp))
+        FooterSection(
+            windowSize = windowSize,
+            onHomeClicked = {},
+            onAboutClicked = {},
+            onExperienceClicked = {},
+            onSkillsClicked = {},
+            onContactClicked = {},
         )
     }
 }
