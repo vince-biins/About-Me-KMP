@@ -15,7 +15,7 @@ fun App() {
     KoinApplication(
         application = {
             modules(
-                homeModule
+                homeModule,
             )
         }
     ) {

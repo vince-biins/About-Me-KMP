@@ -19,6 +19,7 @@ fun BasicProfileDto.transform() = BasicProfile(
     headerTitle = headerTitle,
     headerSubtitle = headerSubtitle,
     headerImageUrl = headerImageUrl,
+
 )
 
 fun DetailedProfileDto.transform() = DetailedProfile(
@@ -58,3 +59,9 @@ fun SkillDto.transform() = Skill(
     title = title,
     subTitle = subTitle,
 )
+
+//fun Profile2.transform() = BasicProfile(
+//    headerTitle = title,
+//    headerSubtitle = subTitle,
+//    headerImageUrl = imageUrl
+//)

@@ -14,7 +14,8 @@ internal object Mock {
     val basicProfile = BasicProfileDto(
         headerTitle = "I’m a Mobile Developer",
         headerSubtitle = "Turning Ideas into Mobile Solutions.",
-        headerImageUrl = ""
+        headerImageUrl = "",
+        headerSuperTitle = "Hello"
     )
 
     val detailedProfile = DetailedProfileDto(

@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.googleServices)
 }
 
 android  {
@@ -79,6 +80,13 @@ kotlin {
                 implementation(libs.androidx.lifecycle.viewmodel)
                 implementation(libs.navigation.compose)
                 implementation(libs.kotlinx.serialization.json)
+
+                //Firebase
+                implementation(project.dependencies.platform(libs.firebase.bom))
+                implementation(libs.gitlive.firebase.analytics)
+                implementation(libs.firebase.database)
+                implementation(libs.firebase.storage)
+                //   implementation(libs.firebase.config)
             }
         }
 
