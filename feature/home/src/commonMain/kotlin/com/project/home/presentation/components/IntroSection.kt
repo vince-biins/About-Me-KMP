@@ -46,7 +46,6 @@ fun IntroSection(
     profile: BasicProfile,
     onClickIntroAbout: () -> Unit,
 ) {
-    val superHeading = "Hello"
     when (windowSize.widthSizeClass) {
         WindowWidthSizeClass.Compact -> {
             Column(
@@ -66,7 +65,7 @@ fun IntroSection(
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
                     isContentCentered = true,
-                    superHeading = superHeading,
+                    superHeading = profile.headerSuperTItle,
                     mainHeading = profile.headerTitle,
                     subHeading = profile.headerSubtitle,
                     onClickIntroAbout = onClickIntroAbout,
@@ -85,7 +84,7 @@ fun IntroSection(
                 IntroDescription(
 
                     isContentCentered = false,
-                    superHeading = superHeading,
+                    superHeading = profile.headerSuperTItle,
                     mainHeading = profile.headerTitle,
                     subHeading = profile.headerSubtitle,
                     onClickIntroAbout = onClickIntroAbout,

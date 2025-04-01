@@ -130,17 +130,21 @@ fun HomeContent(
         if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
             Spacer(Modifier.height(64.dp))
         }
-        IntroSection(
-            windowSize = windowSize,
-            profile = profile.basicProfile,
-            onClickIntroAbout = {},
-        )
+        profile.basicProfile?.let {
+            IntroSection(
+                windowSize = windowSize,
+                profile = it,
+                onClickIntroAbout = {},
+            )
+        }
         Spacer(Modifier.height(32.dp))
-        DetailsSection(
-            windowSize = windowSize,
-            profile = profile.detailedProfile,
-            onClickDownloadCV = {},
-        )
+        profile.detailedProfile?.let {
+            DetailsSection(
+                windowSize = windowSize,
+                profile = it,
+                onClickDownloadCV = {},
+            )
+        }
         Spacer(Modifier.height(32.dp))
         ExperienceSection(
             title = "Professional Journey",

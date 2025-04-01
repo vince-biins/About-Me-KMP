@@ -1,35 +1,61 @@
 package com.project.home.data.repository
 
-import com.project.home.data.Mock
 import com.project.home.data.mappers.transform
+import com.project.home.data.model.BackgroundDto
 import com.project.home.data.model.BasicProfileDto
+import com.project.home.data.model.ContactDto
+import com.project.home.data.model.DetailedProfileDto
+import com.project.home.data.model.ExpertiseDto
+import com.project.home.data.service.SupabaseDatabaseService
+import com.project.home.domain.model.Background
 import com.project.home.domain.model.BasicProfile
-import com.project.home.domain.model.Profile
+import com.project.home.domain.model.Contact
+import com.project.home.domain.model.DetailedProfile
+import com.project.home.domain.model.Expertise
 import com.project.home.domain.repository.HomeRepository
 import com.project.home.domain.service.DatabaseService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
+
 
 class HomeRepositoryImpl(
-    private val databaseService: DatabaseService
-): HomeRepository {
-    override suspend fun fetchProfileData(): Profile {
-        val shouldThrowError = false
-        when (shouldThrowError) {
-            true -> throw Exception("Something went wrong")
-            false -> return Profile(
-                basicProfile = Mock.basicProfile.transform(),
-                detailedProfile = Mock.detailedProfile.transform(),
-                background = Mock.background.map { it.transform() },
-                skills = Mock.expertise.map { it.transform() },
-                contact = Mock.contactDtos.map { it.transform() },
-            )
-        }
-    }
+    private val supabaseDatabaseService: DatabaseService
+) : HomeRepository {
 
-    override suspend fun getProfileData(): Flow<BasicProfile?> {
-        val res = databaseService.get("profile/intro_profile", BasicProfileDto.serializer())
-        return res.map { it?.transform() }
+    override suspend fun getBasicProfileData(): Flow<BasicProfile?> =
+        supabaseDatabaseService.getIntroProfile(INTRO_PROFILE_PATH).map {
+            it?.transform()
+        }
+
+    override suspend fun getDetailProfileData(): Flow<DetailedProfile?> =
+        supabaseDatabaseService.getDetailProfile(DETAIL_PROFILE_PATH).map {
+            it?.transform()
+        }
+
+    override suspend fun getExpertiseData(): Flow<List<Expertise>> =
+        supabaseDatabaseService.getExpertise(EXPERTISE_PATH).map { expertise ->
+            expertise.map { it.transform() }
+        }
+
+    override suspend fun getBackgroundData(): Flow<List<Background>> =
+        supabaseDatabaseService.getExperience(EXPERIENCE_PATH_PATH).map { experience ->
+            experience.map { it.transform() }
+        }
+
+    override suspend fun getContactData(): Flow<List<Contact>> =
+        supabaseDatabaseService.getContact(CONTACT_PATH).map { contact ->
+            contact.map { it.transform() }
+        }
+
+
+    companion object {
+        val PROFILE_PATH = "profile"
+        val INTRO_PROFILE_PATH = "intro_profile"
+        val DETAIL_PROFILE_PATH = "detail_profile"
+        val EXPERIENCE_PATH_PATH = "background"
+        val EXPERTISE_PATH = "expertise"
+        val CONTACT_PATH = "contact"
     }
 }

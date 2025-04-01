@@ -15,16 +15,18 @@ firebaseAnalytics = "2.1.0"
 firebaseBom = "33.11.0"
 firebaseConfig = "2.1.0"
 firebaseDatabase = "2.1.0"
+firebaseInstallations = "2.1.0"
 firebaseStorage = "2.1.0"
 junit = "4.13.2"
-kotlin = "2.1.20-RC"
+kotlin = "2.1.20"
 kotlinx-coroutines = "1.10.1"
 kotlinxSerializationJson = "1.8.0"
 kotlinxSerializationJsonVersion = "1.6.2"
+supabaseKtor = "3.1.2"
 material3WindowSizeClassMultiplatform = "0.5.0"
 navigationComposeVersion = "2.8.0-alpha10"
 uiTextAndroid = "1.7.8"
-kotlinStdlib = "2.1.10"
+kotlinStdlib = "2.1.20"
 runner = "1.6.2"
 core = "1.6.1"
 koin = "4.0.2"
@@ -40,10 +42,12 @@ gservices = "4.4.2"
 
 
 [libraries]
+auth-kt = { module = "io.github.jan-tennert.supabase:auth-kt" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-config = { module = "dev.gitlive:firebase-config", version.ref = "firebaseConfig" }
 firebase-database = { module = "dev.gitlive:firebase-database", version.ref = "firebaseDatabase" }
+firebase-installations = { module = "dev.gitlive:firebase-installations", version.ref = "firebaseInstallations" }
 firebase-storage = { module = "dev.gitlive:firebase-storage", version.ref = "firebaseStorage" }
 gitlive-firebase-analytics = { module = "dev.gitlive:firebase-analytics", version.ref = "firebaseAnalytics" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -71,8 +75,13 @@ koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinComp
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koinComposeMultiplatform" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 #navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "supabaseKtor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "supabaseKtor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "supabaseKtor" }
 material3-window-size-class1-multiplatform = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "material3WindowSizeClassMultiplatform" }
 navigation-compose= { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
+postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt" }
+realtime-kt = { module = "io.github.jan-tennert.supabase:realtime-kt" }
 ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
 androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }

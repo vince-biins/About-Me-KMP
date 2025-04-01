@@ -19,6 +19,7 @@ fun BasicProfileDto.transform() = BasicProfile(
     headerTitle = headerTitle,
     headerSubtitle = headerSubtitle,
     headerImageUrl = headerImageUrl,
+    headerSuperTItle = headerSuperTitle
 
 )
 
@@ -26,7 +27,7 @@ fun DetailedProfileDto.transform() = DetailedProfile(
     title = title,
     description = description,
     name = name,
-    age = age,
+    age = 1,
     location = location,
     email = email,
 )
@@ -47,21 +48,16 @@ fun ExperienceDto.transform() = Experience(
 fun ContactDto.transform() = Contact(
     title = title,
     url = url,
+    imageUrl = imageUrl
 )
 
 fun ExpertiseDto.transform() = Expertise(
     title = title,
     skill = skill.map { it.transform() },
-    imageUrl = imageUrl,
+    imageUrl = imageUrl ?: "",
 )
 
 fun SkillDto.transform() = Skill(
     title = title,
-    subTitle = subTitle,
+    subTitle = subSkills?.map { it.title } ?: emptyList(),
 )
-
-//fun Profile2.transform() = BasicProfile(
-//    headerTitle = title,
-//    headerSubtitle = subTitle,
-//    headerImageUrl = imageUrl
-//)

@@ -1,18 +1,18 @@
 package com.project.home.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.composables.buttons.BaseViewModel
+import com.project.home.domain.model.Profile
 import com.project.home.domain.repository.HomeRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val homeRepository: HomeRepository
-): ViewModel() {
+): BaseViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
@@ -21,43 +21,30 @@ class HomeViewModel(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             fetchHomeState()
-            delay(500)
-            getProfileData()
         }
     }
 
-     private fun fetchHomeState() {
-        viewModelScope.launch {
-            try {
-                val profile = homeRepository.fetchProfileData()
-                delay(2000)
+    private suspend fun fetchHomeState() {
+        try {
+            val profileFlow = combine(
+                safeFlow({ homeRepository.getBasicProfileData() },null),
+                safeFlow({ homeRepository.getDetailProfileData() }, null),
+                safeFlow({ homeRepository.getBackgroundData() }, emptyList()),
+                safeFlow({ homeRepository.getExpertiseData() }, emptyList()),
+                safeFlow({ homeRepository.getContactData() }, emptyList())
+            ) { basic, detail, background, skills, contact ->
+                Profile(
+                    basicProfile = basic,
+                    detailedProfile = detail,
+                    background = background,
+                    skills = skills,
+                    contact = contact)
+            }
+            profileFlow.collect { profile ->
                 _state.update { it.copy(profile = profile, isLoading = false) }
-            } catch (e: Exception) {
-                _state.update { it.copy(error = e.message, isLoading = false) }
             }
-        }
-    }
-
-    private fun getProfileData() {
-        viewModelScope.launch {
-            try {
-                val databaseResult = homeRepository.getProfileData()
-                databaseResult.collectLatest { profile ->
-                    println("VINCENT -viewmodel- $profile")
-                    _state.update { currentState ->
-                        currentState.profile?.let { currentProfile ->
-                            currentState.copy(
-                                profile = currentProfile.copy(basicProfile = profile ?: currentProfile.basicProfile),
-                                isLoading = false,
-                                error = null
-                            )
-                        } ?: currentState.copy(isLoading = false, error = "Profile data is not available")
-
-                    }
-                }
-            } catch (e: Exception) {
-                _state.update { it.copy(error = e.message, isLoading = false) }
-            }
+        } catch (e: Exception) {
+            _state.update { it.copy(error = e.message, isLoading = false) }
         }
     }
 }

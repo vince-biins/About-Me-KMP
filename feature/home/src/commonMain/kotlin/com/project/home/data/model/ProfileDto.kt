@@ -6,6 +6,7 @@ import kotlinx.serialization.json.JsonNames
 
 
 @Serializable
+@SerialName("intro_profile")
 data class BasicProfileDto(
     @SerialName("superTitle") val headerSuperTitle: String,
     @SerialName("title") val headerTitle: String,
@@ -13,19 +14,12 @@ data class BasicProfileDto(
     @SerialName("imageUrl") val headerImageUrl: String,
 )
 
+@Serializable
  data class DetailedProfileDto(
     val title: String,
     val description: String,
     val name: String,
-    val age: Int,
+    val birthday: String,
     val location: String,
     val email: String,
 )
-@Serializable
-data class Profile2(
-    val imageUrl: String,
-    val subTitle: String,
-    val superTitle: String,
-    val title: String,
-
-    )

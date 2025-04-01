@@ -61,7 +61,7 @@ private fun ExperienceContainer(
     background: Background
 ) {
     if (isCompact) {
-        ExperienceCompact(
+        ExperienceExpanded(
             modifier = modifier,
             background = background
         )

@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 
 plugins {
@@ -6,6 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.androidLibrary)
+
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.googleServices)
 }
@@ -19,17 +21,15 @@ android  {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
 }
 kotlin {
     androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
@@ -81,30 +81,40 @@ kotlin {
                 implementation(libs.navigation.compose)
                 implementation(libs.kotlinx.serialization.json)
 
-                //Firebase
-                implementation(project.dependencies.platform(libs.firebase.bom))
-                implementation(libs.gitlive.firebase.analytics)
-                implementation(libs.firebase.database)
-                implementation(libs.firebase.storage)
-                //   implementation(libs.firebase.config)
+
+                //SUPABASE
+                implementation(project.dependencies.platform("io.github.jan-tennert.supabase:bom:3.1.2"))
+                implementation(libs.postgrest.kt)
+                implementation(libs.auth.kt)
+                implementation(libs.realtime.kt)
+
             }
         }
 
 
-
+        val jvmMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.cio)
+            }
+        }
         androidMain {
             dependencies {
-
+                implementation(libs.ktor.client.cio)
                 implementation(libs.koin.android)
                 implementation(libs.koin.androidx.compose)
             }
         }
 
-    
+
+        val wasmJsMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.js)
+            }
+        }
 
         iosMain {
             dependencies {
-
+                implementation(libs.ktor.client.darwin)
             }
         }
     }
