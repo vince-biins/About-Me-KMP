@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
@@ -21,6 +23,7 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -36,13 +39,28 @@ import com.project.home.presentation.components.FooterSection
 import com.project.home.presentation.components.HeaderSection
 import com.project.home.presentation.components.IntroSection
 import com.project.home.presentation.components.SkillSection
+import com.project.home.presentation.viewmodel.HeaderSectionType
+import com.project.home.presentation.viewmodel.HomeEvent
 import com.project.home.presentation.viewmodel.HomeViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
     val windowSize = calculateWindowSizeClass()
     val state by viewModel.state.collectAsState()
+
+    val scrollState = rememberLazyListState()
+
+    LaunchedEffect(Unit) {
+        viewModel.event.collectLatest { event ->
+            if(event is HomeEvent.HeaderClicked) {
+                scrollState.animateScrollToItem(event.type.itemPosition)
+            }
+        }
+    }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -65,13 +83,24 @@ fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
 
         if (state.profile != null) {
             HomeScreen(
+                scrollState = scrollState,
                 windowSize = windowSize,
                 profile = state.profile!!,
-                onHomeClicked = {},
-                onContactClicked = {},
-                onAboutClicked = {},
-                onSkillsClicked = {},
-                onExperienceClicked = {},
+                onHomeClicked = {
+                    viewModel.onEvent(HomeEvent.HeaderClicked(HeaderSectionType.HOME))
+                },
+                onContactClicked = {
+                    viewModel.onEvent(HomeEvent.HeaderClicked(HeaderSectionType.CONTACT_US))
+                },
+                onAboutClicked = {
+                    viewModel.onEvent(HomeEvent.HeaderClicked(HeaderSectionType.ABOUT_ME))
+                },
+                onSkillsClicked = {
+                    viewModel.onEvent(HomeEvent.HeaderClicked(HeaderSectionType.EXPERTISE))
+                },
+                onExperienceClicked = {
+                    viewModel.onEvent(HomeEvent.HeaderClicked(HeaderSectionType.EXPERIENCE))
+                },
             )
         }
     }
@@ -79,7 +108,7 @@ fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
 
 @Composable
 fun HomeScreen(
-
+    scrollState: LazyListState,
     profile: Profile,
     onHomeClicked: () -> Unit,
     onAboutClicked: () -> Unit,
@@ -88,6 +117,8 @@ fun HomeScreen(
     onContactClicked: () -> Unit,
     windowSize: WindowSizeClass,
 ) {
+
+
     Scaffold() { innerPadding ->
         Box(
             modifier = Modifier.fillMaxSize().padding(innerPadding)
@@ -95,10 +126,10 @@ fun HomeScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
                     .padding(top = 64.dp)
             ) {
                 HomeContent(
+                    scrollState = scrollState,
                     windowSize = windowSize,
                     profile = profile,
                 )
@@ -122,56 +153,76 @@ fun HomeScreen(
 @Composable
 fun HomeContent(
     modifier: Modifier = Modifier,
+    scrollState: LazyListState,
     windowSize: WindowSizeClass,
     profile: Profile,
 ) {
 
-    Column {
-        if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
-            Spacer(Modifier.height(64.dp))
+    LazyColumn(
+        state = scrollState
+    ) {
+        item {
+            if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
+                Spacer(Modifier.height(64.dp))
+            }
+            profile.basicProfile?.let {
+                IntroSection(
+                    windowSize = windowSize,
+                    profile = it,
+                    onClickIntroAbout = {},
+                )
+            }
         }
-        profile.basicProfile?.let {
-            IntroSection(
+        item {
+            Spacer(Modifier.height(32.dp))
+            profile.detailedProfile?.let {
+                DetailsSection(
+                    windowSize = windowSize,
+                    profile = it,
+                    onClickDownloadCV = {},
+                )
+            }
+        }
+
+        item {
+            Spacer(Modifier.height(32.dp))
+            ExperienceSection(
+                title = "Professional Journey",
                 windowSize = windowSize,
-                profile = it,
-                onClickIntroAbout = {},
+                background = profile.background,
             )
         }
-        Spacer(Modifier.height(32.dp))
-        profile.detailedProfile?.let {
-            DetailsSection(
+
+        item {
+            Spacer(Modifier.height(32.dp))
+            SkillSection(
+                title = "Expertise",
                 windowSize = windowSize,
-                profile = it,
-                onClickDownloadCV = {},
+                expertise = profile.skills
             )
         }
-        Spacer(Modifier.height(32.dp))
-        ExperienceSection(
-            title = "Professional Journey",
-            windowSize = windowSize,
-            background = profile.background,
-        )
-        Spacer(Modifier.height(32.dp))
-        SkillSection(
-            title = "Expertise",
-            windowSize = windowSize,
-            expertise = profile.skills
-        )
-        Spacer(Modifier.height(32.dp))
-        ContactSection(
-            title = "Connect To ME",
-            windowSize = windowSize,
-            onContactClicked = {},
-            contacts = profile.contact
-        )
-        Spacer(Modifier.height(32.dp))
-        FooterSection(
-            windowSize = windowSize,
-            onHomeClicked = {},
-            onAboutClicked = {},
-            onExperienceClicked = {},
-            onSkillsClicked = {},
-            onContactClicked = {},
-        )
+
+        item {
+            Spacer(Modifier.height(32.dp))
+            ContactSection(
+                title = "Connect To ME",
+                windowSize = windowSize,
+                onContactClicked = {},
+                contacts = profile.contact
+            )
+        }
+
+        item {
+            Spacer(Modifier.height(32.dp))
+            FooterSection(
+                windowSize = windowSize,
+                onHomeClicked = {},
+                onAboutClicked = {},
+                onExperienceClicked = {},
+                onSkillsClicked = {},
+                onContactClicked = {},
+            )
+        }
+
     }
 }

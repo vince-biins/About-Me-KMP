@@ -4,7 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.project.composables.buttons.BaseViewModel
 import com.project.home.domain.model.Profile
 import com.project.home.domain.repository.HomeRepository
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
@@ -16,6 +18,9 @@ class HomeViewModel(
 
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
+
+    private val _event = MutableSharedFlow<HomeEvent>()
+    val event  = _event.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -47,4 +52,15 @@ class HomeViewModel(
             _state.update { it.copy(error = e.message, isLoading = false) }
         }
     }
+
+    fun onEvent(uiEvent: HomeEvent ) {
+        when(uiEvent) {
+            is HomeEvent.HeaderClicked -> {
+                viewModelScope.launch {
+                    _event.emit(uiEvent)
+                }
+            }
+        }
+    }
 }
+
