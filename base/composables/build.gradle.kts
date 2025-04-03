@@ -66,21 +66,37 @@ kotlin {
                 implementation(compose.components.resources)
 
                 implementation(libs.koin.compose.viewmodel)
+                implementation(libs.landscapist.coil3)
 
+                implementation(libs.bundles.ktor)
+                implementation(libs.bundles.coil)
             }
         }
 
         androidMain {
             dependencies {
-
+                implementation(libs.ktor.client.okhttp)
             }
         }
 
         iosMain {
             dependencies {
-
+                implementation(libs.ktor.client.darwin)
             }
         }
+
+        jvmMain {
+            dependencies {
+                implementation(libs.ktor.client.okhttp)
+            }
+        }
+
+        wasmJsMain {
+            dependencies {
+                implementation(libs.ktor.client.js)
+            }
+        }
+
     }
 
 }

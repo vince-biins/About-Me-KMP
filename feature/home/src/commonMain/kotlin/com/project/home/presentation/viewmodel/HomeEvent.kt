@@ -1,7 +1,8 @@
 package com.project.home.presentation.viewmodel
 
 sealed class HomeEvent {
-    data class HeaderClicked(val type: HeaderSectionType) : HomeEvent()
+    data class OnHeaderClicked(val type: HeaderSectionType) : HomeEvent()
+    object OnDownloadCvClicked: HomeEvent()
 }
 
 enum class HeaderSectionType(val itemPosition: Int) {

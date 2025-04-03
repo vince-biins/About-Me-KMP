@@ -1,9 +1,5 @@
 package com.project.home.presentation.components
 
-import aboutme.feature.home.generated.resources.Res
-import aboutme.feature.home.generated.resources.profile
-import aboutme.feature.home.generated.resources.profile2
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,11 +28,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.project.composables.buttons.CoilImageWithError
+import com.project.composables.buttons.CoilImageWithError2
 import com.project.composables.buttons.RoundedCornerButton
 import com.project.home.domain.model.BasicProfile
 import com.project.theme.appTheme
-import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.painterResource
+import com.skydoves.landscapist.ImageOptions
 
 @Composable
 fun IntroSection(
@@ -56,8 +52,7 @@ fun IntroSection(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 ProfileImage(
-
-                    image = Res.drawable.profile2
+                    imageUrl = profile.headerImageUrl,
                 )
 
                 IntroDescription(
@@ -73,6 +68,7 @@ fun IntroSection(
 
             }
         }
+
         else -> {
             Row(
                 modifier = modifier
@@ -93,9 +89,10 @@ fun IntroSection(
                 Spacer(Modifier.width(32.dp))
                 Column {
                     ProfileImage(
-                        image = Res.drawable.profile,
+                        imageUrl = profile.headerImageUrl,
                         isCircular = false,
-                    )
+
+                        )
                 }
             }
         }
@@ -105,10 +102,10 @@ fun IntroSection(
 @Composable
 private fun ProfileImage(
     modifier: Modifier = Modifier,
-    image: DrawableResource,
+    imageUrl: String,
     isCircular: Boolean = true,
 ) {
-    val imageSize = if(isCircular) 240.dp else 420.dp
+    val imageSize = if (isCircular) 240.dp else 420.dp
     Box(
         contentAlignment = Alignment.Center,
         modifier = if (isCircular) modifier
@@ -126,12 +123,18 @@ private fun ProfileImage(
             modifier.wrapContentSize()
         }
     ) {
-        Image(
-            modifier = Modifier
-                .size(imageSize),
-            painter = painterResource(image),
-            contentDescription = "Profile Image",
-            contentScale = ContentScale.FillBounds,
+//        CoilImageWithError(
+//            imageUrl = imageUrl,
+//            modifier = Modifier.size(imageSize),
+//            imageOptions = ImageOptions(
+//                contentScale = ContentScale.FillBounds,
+//                alignment = Alignment.Center
+//            )
+//        )
+
+        CoilImageWithError2(
+            imageUrl = imageUrl,
+            modifier = Modifier.size(imageSize),
         )
     }
 }

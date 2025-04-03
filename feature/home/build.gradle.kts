@@ -88,6 +88,7 @@ kotlin {
                 implementation(libs.auth.kt)
                 implementation(libs.realtime.kt)
 
+                implementation(libs.landscapist.coil3)
             }
         }
 

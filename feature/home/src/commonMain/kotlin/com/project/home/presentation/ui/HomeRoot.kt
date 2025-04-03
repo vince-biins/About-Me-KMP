@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -54,7 +52,7 @@ fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
 
     LaunchedEffect(Unit) {
         viewModel.event.collectLatest { event ->
-            if(event is HomeEvent.HeaderClicked) {
+            if(event is HomeEvent.OnHeaderClicked) {
                 scrollState.animateScrollToItem(event.type.itemPosition)
             }
         }
@@ -87,20 +85,26 @@ fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
                 windowSize = windowSize,
                 profile = state.profile!!,
                 onHomeClicked = {
-                    viewModel.onEvent(HomeEvent.HeaderClicked(HeaderSectionType.HOME))
+                    viewModel.onEvent(HomeEvent.OnHeaderClicked(HeaderSectionType.HOME))
                 },
                 onContactClicked = {
-                    viewModel.onEvent(HomeEvent.HeaderClicked(HeaderSectionType.CONTACT_US))
+                    viewModel.onEvent(HomeEvent.OnHeaderClicked(HeaderSectionType.CONTACT_US))
                 },
                 onAboutClicked = {
-                    viewModel.onEvent(HomeEvent.HeaderClicked(HeaderSectionType.ABOUT_ME))
+                    viewModel.onEvent(HomeEvent.OnHeaderClicked(HeaderSectionType.ABOUT_ME))
                 },
                 onSkillsClicked = {
-                    viewModel.onEvent(HomeEvent.HeaderClicked(HeaderSectionType.EXPERTISE))
+                    viewModel.onEvent(HomeEvent.OnHeaderClicked(HeaderSectionType.EXPERTISE))
                 },
                 onExperienceClicked = {
-                    viewModel.onEvent(HomeEvent.HeaderClicked(HeaderSectionType.EXPERIENCE))
+                    viewModel.onEvent(HomeEvent.OnHeaderClicked(HeaderSectionType.EXPERIENCE))
                 },
+                onClickIntroAbout = {
+                    viewModel.onEvent(HomeEvent.OnHeaderClicked(HeaderSectionType.ABOUT_ME))
+                },
+                onClickDownload = {
+                    viewModel.onEvent(HomeEvent.OnDownloadCvClicked)
+                }
             )
         }
     }
@@ -109,13 +113,15 @@ fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
 @Composable
 fun HomeScreen(
     scrollState: LazyListState,
+    windowSize: WindowSizeClass,
     profile: Profile,
     onHomeClicked: () -> Unit,
     onAboutClicked: () -> Unit,
     onExperienceClicked: () -> Unit,
     onSkillsClicked: () -> Unit,
     onContactClicked: () -> Unit,
-    windowSize: WindowSizeClass,
+    onClickIntroAbout: () -> Unit,
+    onClickDownload: () -> Unit,
 ) {
 
 
@@ -132,6 +138,13 @@ fun HomeScreen(
                     scrollState = scrollState,
                     windowSize = windowSize,
                     profile = profile,
+                    onClickIntroAbout = onClickIntroAbout,
+                    onClickDownload = onClickDownload,
+                    onHomeClicked = onHomeClicked,
+                    onAboutClicked = onAboutClicked,
+                    onContactClicked = onContactClicked,
+                    onExperienceClicked = onExperienceClicked,
+                    onSkillsClicked = onSkillsClicked,
                 )
             }
             HeaderSection(
@@ -154,8 +167,15 @@ fun HomeScreen(
 fun HomeContent(
     modifier: Modifier = Modifier,
     scrollState: LazyListState,
-    windowSize: WindowSizeClass,
     profile: Profile,
+    windowSize: WindowSizeClass,
+    onClickIntroAbout: () -> Unit,
+    onClickDownload: () -> Unit,
+    onHomeClicked: () -> Unit,
+    onAboutClicked: () -> Unit,
+    onExperienceClicked: () -> Unit,
+    onSkillsClicked:() -> Unit,
+    onContactClicked:() -> Unit,
 ) {
 
     LazyColumn(
@@ -169,7 +189,7 @@ fun HomeContent(
                 IntroSection(
                     windowSize = windowSize,
                     profile = it,
-                    onClickIntroAbout = {},
+                    onClickIntroAbout = onClickIntroAbout,
                 )
             }
         }
@@ -179,7 +199,7 @@ fun HomeContent(
                 DetailsSection(
                     windowSize = windowSize,
                     profile = it,
-                    onClickDownloadCV = {},
+                    onClickDownloadCV = onClickDownload,
                 )
             }
         }
@@ -216,11 +236,11 @@ fun HomeContent(
             Spacer(Modifier.height(32.dp))
             FooterSection(
                 windowSize = windowSize,
-                onHomeClicked = {},
-                onAboutClicked = {},
-                onExperienceClicked = {},
-                onSkillsClicked = {},
-                onContactClicked = {},
+                onHomeClicked = onHomeClicked,
+                onAboutClicked = onAboutClicked,
+                onExperienceClicked = onExperienceClicked,
+                onSkillsClicked = onSkillsClicked,
+                onContactClicked = onContactClicked,
             )
         }
 

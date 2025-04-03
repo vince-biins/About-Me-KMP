@@ -55,10 +55,14 @@ class HomeViewModel(
 
     fun onEvent(uiEvent: HomeEvent ) {
         when(uiEvent) {
-            is HomeEvent.HeaderClicked -> {
+            is HomeEvent.OnHeaderClicked -> {
                 viewModelScope.launch {
                     _event.emit(uiEvent)
                 }
+            }
+
+            HomeEvent.OnDownloadCvClicked -> {
+
             }
         }
     }
