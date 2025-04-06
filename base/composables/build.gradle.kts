@@ -66,16 +66,26 @@ kotlin {
                 implementation(compose.components.resources)
 
                 implementation(libs.koin.compose.viewmodel)
-                implementation(libs.landscapist.coil3)
 
-                implementation(libs.bundles.ktor)
-                implementation(libs.bundles.coil)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.cio)
+                implementation(libs.ktor.client.json)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.client.content.negotiation)
+
+                implementation(libs.coil.compose.core)
+                implementation(libs.coil.compose)
+                implementation(libs.coil.mp)
+                implementation(libs.coil.network.ktor3)
+
             }
         }
 
         androidMain {
             dependencies {
                 implementation(libs.ktor.client.okhttp)
+                implementation(libs.ktor.client)
+//                implementation(libs.ktor.client.cio)
             }
         }
 
@@ -87,13 +97,17 @@ kotlin {
 
         jvmMain {
             dependencies {
-                implementation(libs.ktor.client.okhttp)
+                implementation(libs.ktor.client.java)
+                implementation(libs.ktor.client.jvm)
             }
         }
 
-        wasmJsMain {
+        jsMain.dependencies {
+            implementation(libs.ktor.client.js)
+        }
+        val wasmJsMain by getting {
             dependencies {
-                implementation(libs.ktor.client.js)
+                implementation(libs.ktor.client.wasmJs)
             }
         }
 

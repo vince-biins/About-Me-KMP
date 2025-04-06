@@ -24,16 +24,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.project.composables.buttons.CoilImageWithError
 import com.project.composables.buttons.CoilImageWithError2
 import com.project.composables.buttons.RoundedCornerButton
 import com.project.home.domain.model.BasicProfile
 import com.project.theme.appTheme
-import com.skydoves.landscapist.ImageOptions
 
 @Composable
 fun IntroSection(
@@ -123,15 +120,6 @@ private fun ProfileImage(
             modifier.wrapContentSize()
         }
     ) {
-//        CoilImageWithError(
-//            imageUrl = imageUrl,
-//            modifier = Modifier.size(imageSize),
-//            imageOptions = ImageOptions(
-//                contentScale = ContentScale.FillBounds,
-//                alignment = Alignment.Center
-//            )
-//        )
-
         CoilImageWithError2(
             imageUrl = imageUrl,
             modifier = Modifier.size(imageSize),

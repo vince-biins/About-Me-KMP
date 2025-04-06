@@ -88,7 +88,7 @@ kotlin {
                 implementation(libs.auth.kt)
                 implementation(libs.realtime.kt)
 
-                implementation(libs.landscapist.coil3)
+//                implementation(libs.landscapist.coil3)
             }
         }
 
@@ -109,7 +109,7 @@ kotlin {
 
         val wasmJsMain by getting {
             dependencies {
-                implementation(libs.ktor.client.js)
+                implementation(libs.ktor.client.wasmJs)
             }
         }
 

@@ -10,31 +10,29 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.coil3.CoilImage
 
 @Composable
-fun CoilImageWithError(
+fun CoilImageWithError2(
     modifier: Modifier = Modifier,
     imageUrl: String,
-    imageOptions: ImageOptions = ImageOptions(
-        contentScale = ContentScale.FillBounds,
-        alignment = Alignment.Center
-    )
+
 ) {
-    CoilImage(
-        modifier = modifier,
-        imageModel = { imageUrl },
-        imageOptions = imageOptions,
-        loading = {
-            Box(
+    val painter = rememberAsyncImagePainter(
+        model = imageUrl,
+    )
+    println("$imageUrl - ${painter.state.value}")
+    Box(modifier = modifier, contentAlignment = Alignment.Center) {
+        when (painter.state.collectAsState().value) {
+            is AsyncImagePainter.State.Loading -> {
+                Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(color = MaterialTheme.colorScheme.background),
@@ -42,9 +40,10 @@ fun CoilImageWithError(
             ) {
                 CircularProgressIndicator(Modifier.size(24.dp))
             }
-        },
-        failure = {
-            Box(
+            }
+            is AsyncImagePainter.State.Error -> {
+                println("Error ${(painter.state.value as AsyncImagePainter.State.Error).result.throwable}")
+                Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(color = MaterialTheme.colorScheme.background),
@@ -56,27 +55,16 @@ fun CoilImageWithError(
                     tint = MaterialTheme.colorScheme.error
                 )
             }
+            }
+            is AsyncImagePainter.State.Success -> {
+                Image(painter = painter, contentDescription = null,
+                    modifier = modifier,
+                    contentScale = ContentScale.FillBounds,
+                )
+            }
+            else ->{}
         }
-    )
-}
-
-@Composable
-fun CoilImageWithError2(
-    modifier: Modifier = Modifier,
-    imageUrl: String,
-
-) {
-    val painter = rememberAsyncImagePainter(
-        model = imageUrl,
-    )
-
-    Image(
-        painter = painter,
-        contentDescription = null,
-        contentScale = ContentScale.FillBounds,
-        alignment = Alignment.Center,
-        modifier = modifier
-    )
+    }
 }
 
 

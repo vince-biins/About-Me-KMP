@@ -10,9 +10,7 @@ androidx-core-ktx = "1.15.0"
 androidx-espresso-core = "3.6.1"
 androidx-lifecycle = "2.8.4"
 androidx-test-junit = "1.2.1"
-coilCompose = "3.1.0"
-coilNetworkKtor = "3.0.0-alpha06"
-compose-multiplatform = "1.7.0"
+compose-multiplatform = "1.7.1"
 
 junit = "4.13.2"
 kotlin = "2.1.20"
@@ -20,8 +18,7 @@ kotlinx-coroutines = "1.10.1"
 kotlinxSerializationJson = "1.8.0"
 
 landscapistCoil3 = "2.4.7"
-ktor = "3.1.2"
-ktor-wasm = "3.0.0-wasm2"
+
 material3WindowSizeClassMultiplatform = "0.5.0"
 navigationComposeVersion = "2.8.0-alpha10"
 uiTextAndroid = "1.7.8"
@@ -38,6 +35,7 @@ uriKmp = "0.0.18"
 composeHotReload  = "1.0.0-alpha02"
 
 gservices = "4.4.2"
+ktor = "3.1.2"
 coil3 = "3.1.0"
 
 [libraries]
@@ -80,17 +78,24 @@ androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "u
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
 uri-kmp = { module = "com.eygraber:uri-kmp", version.ref = "uriKmp" }
 
+ktor-client = { module = "io.ktor:ktor-client-android", version.ref="ktor" }
+
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
-ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor-wasm" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-java = { group = "io.ktor", name = "ktor-client-java", version.ref = "ktor" }
+ktor-client-jvm = { module = "io.ktor:ktor-client-jvm", version.ref="ktor" }
+ktor-client-wasmJs = { module = "io.ktor:ktor-client-js-wasm-js", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref="ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref="ktor" }
+ktor-client-json = { module = "io.ktor:ktor-client-json", version.ref="ktor" }
 
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
 coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil3" }
-coil-network-ktor2 = { module = "io.coil-kt.coil3:coil-network-ktor2", version.ref = "coil3" }
-coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil3" }
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
+coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil3" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -104,14 +109,3 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
 googleServices = {id = "com.google.gms.google-services", version.ref = "gservices"}
 
-[bundles]
-ktor = [
-    "ktor-client-core",
-]
-coil = [
-    "coil-compose",
-    "coil-compose-core",
-    "coil-network-ktor2",
-    "coil-network-ktor3",
-    "coil-mp"
-]

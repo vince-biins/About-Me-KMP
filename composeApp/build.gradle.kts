@@ -67,13 +67,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
 
 
-
-
-
             api(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.navigation.compose)
+
+            implementation(libs.coil.compose)
 
         }
         desktopMain.dependencies {
