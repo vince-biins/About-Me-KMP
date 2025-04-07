@@ -10,14 +10,15 @@ import com.project.theme.AppContext
 import okio.FileSystem
 import okio.Path.Companion.toOkioPath
 import okio.buffer
+import android.webkit.MimeTypeMap
 
 
 actual fun saveFile(fileName: String, data: ByteArray) {
-
+    val mimeType = getMimeTypeFromFileName(fileName) ?: "application/octet-stream"
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-            put(MediaStore.MediaColumns.MIME_TYPE, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+            put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
             put(MediaStore.MediaColumns.RELATIVE_PATH, "Download/")
         }
 
@@ -41,4 +42,9 @@ actual fun saveFile(fileName: String, data: ByteArray) {
             Log.e("FileSaver", "Failed to resolve downloads directory")
         }
     }
+}
+
+fun getMimeTypeFromFileName(fileName: String): String? {
+    val extension = fileName.substringAfterLast('.', "").lowercase()
+    return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
 }

@@ -227,7 +227,6 @@ fun HomeContent(
             ContactSection(
                 title = "Connect To ME",
                 windowSize = windowSize,
-                onContactClicked = {},
                 contacts = profile.contact
             )
         }

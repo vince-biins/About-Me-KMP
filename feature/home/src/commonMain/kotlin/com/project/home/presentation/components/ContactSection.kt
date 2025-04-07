@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,6 +25,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.project.home.domain.model.Contact
@@ -39,8 +38,8 @@ fun ContactSection(
     title: String,
     windowSize: WindowSizeClass,
     contacts: List<Contact>,
-    onContactClicked: (String) -> Unit,
 ) {
+    val uriHandler = LocalUriHandler.current
     val isCompact = windowSize.widthSizeClass == WindowWidthSizeClass.Compact
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -66,9 +65,10 @@ fun ContactSection(
                 ContactTile(
                     text = contact.title,
                     onContactClicked = {
-                        onContactClicked(contact.url)
+                        uriHandler.openUri(it)
                     },
                     isCompact = isCompact,
+                    url = contact.url
                 )
             }
 
@@ -80,8 +80,9 @@ fun ContactSection(
 private fun ContactTile(
     isCompact: Boolean,
     text: String,
+    url: String,
     modifier: Modifier = Modifier,
-    onContactClicked: () -> Unit,
+    onContactClicked: (String) -> Unit,
 ) {
     val paddingHorizontal = if (isCompact) 16.dp else 24.dp
     val width = if(isCompact) 180.dp else 200.dp
@@ -89,7 +90,7 @@ private fun ContactTile(
         modifier = modifier
             .width(width)
             .clickable {
-                onContactClicked()
+                onContactClicked(url)
             }
             .background(
                 MaterialTheme.colorScheme.secondary,

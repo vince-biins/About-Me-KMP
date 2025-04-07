@@ -75,14 +75,9 @@ kotlin {
 
         iosMain {
             dependencies {
-                implementation(libs.ktor.client.darwin) // KMP dependencies declared in commonMain.
+                implementation(libs.ktor.client.darwin)
             }
         }
-
-        val wasmJsMain by getting
-        dependencies {
-                implementation(libs.okio.wasm)
-            }
 
     }
 
