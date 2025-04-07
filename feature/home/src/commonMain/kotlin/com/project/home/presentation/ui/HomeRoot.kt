@@ -102,8 +102,8 @@ fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
                 onClickIntroAbout = {
                     viewModel.onEvent(HomeEvent.OnHeaderClicked(HeaderSectionType.ABOUT_ME))
                 },
-                onClickDownload = {
-                    viewModel.onEvent(HomeEvent.OnDownloadCvClicked)
+                onClickDownloadCV = {
+                    viewModel.onEvent(HomeEvent.OnDownloadCvClicked(it))
                 }
             )
         }
@@ -121,7 +121,7 @@ fun HomeScreen(
     onSkillsClicked: () -> Unit,
     onContactClicked: () -> Unit,
     onClickIntroAbout: () -> Unit,
-    onClickDownload: () -> Unit,
+    onClickDownloadCV: (String) -> Unit,
 ) {
 
 
@@ -139,7 +139,7 @@ fun HomeScreen(
                     windowSize = windowSize,
                     profile = profile,
                     onClickIntroAbout = onClickIntroAbout,
-                    onClickDownload = onClickDownload,
+                    onClickDownloadCV = onClickDownloadCV,
                     onHomeClicked = onHomeClicked,
                     onAboutClicked = onAboutClicked,
                     onContactClicked = onContactClicked,
@@ -170,7 +170,7 @@ fun HomeContent(
     profile: Profile,
     windowSize: WindowSizeClass,
     onClickIntroAbout: () -> Unit,
-    onClickDownload: () -> Unit,
+    onClickDownloadCV: (String) -> Unit,
     onHomeClicked: () -> Unit,
     onAboutClicked: () -> Unit,
     onExperienceClicked: () -> Unit,
@@ -199,7 +199,7 @@ fun HomeContent(
                 DetailsSection(
                     windowSize = windowSize,
                     profile = it,
-                    onClickDownloadCV = onClickDownload,
+                    onClickDownloadCV = onClickDownloadCV,
                 )
             }
         }

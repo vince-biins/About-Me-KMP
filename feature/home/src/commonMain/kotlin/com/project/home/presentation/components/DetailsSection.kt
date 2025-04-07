@@ -32,7 +32,7 @@ fun DetailsSection(
     modifier: Modifier = Modifier,
     windowSize: WindowSizeClass,
     profile: DetailedProfile,
-    onClickDownloadCV: () -> Unit,
+    onClickDownloadCV: (String) -> Unit,
 ) {
     val sectionHeadingText = "About Myself"
     when (windowSize.widthSizeClass) {
@@ -102,7 +102,7 @@ fun DetailContainer(
     isCompact: Boolean = false,
     modifier: Modifier = Modifier,
     profile: DetailedProfile,
-    onClickDownloadCV: () -> Unit,
+    onClickDownloadCV: (String) -> Unit,
 ) {
     Column(
         modifier = modifier.padding(12.dp),
@@ -175,7 +175,7 @@ fun DetailContainer(
             horizontalArrangement = Arrangement.Center
         ) {
             RoundedCornerButton(
-                onClick = onClickDownloadCV,
+                onClick = { onClickDownloadCV(profile.fileUrl) },
                 text = "Download CV",
             )
         }

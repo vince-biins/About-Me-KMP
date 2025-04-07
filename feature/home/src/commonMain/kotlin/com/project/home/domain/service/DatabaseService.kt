@@ -14,4 +14,5 @@ interface DatabaseService {
     fun getDetailProfile(path: String): Flow<DetailedProfileDto?>
     fun getExpertise(path: String): Flow<List<ExpertiseDto>>
     fun getExperience(path: String): Flow<List<BackgroundDto>>
+
 }

@@ -18,6 +18,7 @@ data class BasicProfileDto(
  data class DetailedProfileDto(
     val title: String,
     val description: String,
+    @SerialName("file_url")val fileUrl: String,
     val name: String,
     val birthday: String,
     val location: String,

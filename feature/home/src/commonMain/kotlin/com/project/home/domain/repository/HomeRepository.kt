@@ -13,4 +13,5 @@ interface HomeRepository {
     suspend fun getExpertiseData(): Flow<List<Expertise>>
     suspend fun getBackgroundData(): Flow<List<Background>>
     suspend fun getContactData(): Flow<List<Contact>>
+    suspend fun downloadCv(url: String): ByteArray?
 }

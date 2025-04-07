@@ -30,6 +30,7 @@ fun DetailedProfileDto.transform() = DetailedProfile(
     age = 1,
     location = location,
     email = email,
+    fileUrl = fileUrl,
 )
 
 fun BackgroundDto.transform() = Background(

@@ -64,6 +64,7 @@ kotlin {
 
                 implementation(project(":base:composables"))
                 implementation(project(":base:theme"))
+                implementation(project(":base:utils"))
 
                 implementation(libs.kotlin.stdlib)
                 // Add KMP dependencies here
@@ -88,7 +89,7 @@ kotlin {
                 implementation(libs.auth.kt)
                 implementation(libs.realtime.kt)
 
-//                implementation(libs.landscapist.coil3)
+
             }
         }
 

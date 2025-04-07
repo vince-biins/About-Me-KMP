@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.project.composables.buttons.BaseViewModel
 import com.project.home.domain.model.Profile
 import com.project.home.domain.repository.HomeRepository
+import com.project.utils.platform.saveFile
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -13,7 +14,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val homeRepository: HomeRepository
+    private val homeRepository: HomeRepository,
+
 ): BaseViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -61,10 +63,19 @@ class HomeViewModel(
                 }
             }
 
-            HomeEvent.OnDownloadCvClicked -> {
-
+            is HomeEvent.OnDownloadCvClicked -> {
+                viewModelScope.launch {
+                    val file = homeRepository.downloadCv(uiEvent.url)
+                    file?.let {
+                        saveFile(FILE_NAME, data = it)
+                    }
+                }
             }
         }
+    }
+
+    companion object {
+        private val FILE_NAME = "Ola_ola_Vincent_CV.pdf"
     }
 }
 

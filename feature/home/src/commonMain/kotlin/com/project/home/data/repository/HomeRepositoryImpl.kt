@@ -14,6 +14,11 @@ import com.project.home.domain.model.DetailedProfile
 import com.project.home.domain.model.Expertise
 import com.project.home.domain.repository.HomeRepository
 import com.project.home.domain.service.DatabaseService
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.utils.io.toByteArray
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -21,7 +26,8 @@ import kotlinx.serialization.builtins.ListSerializer
 
 
 class HomeRepositoryImpl(
-    private val supabaseDatabaseService: DatabaseService
+    private val supabaseDatabaseService: DatabaseService,
+    private val client: HttpClient,
 ) : HomeRepository {
 
     override suspend fun getBasicProfileData(): Flow<BasicProfile?> =
@@ -48,6 +54,16 @@ class HomeRepositoryImpl(
         supabaseDatabaseService.getContact(CONTACT_PATH).map { contact ->
             contact.map { it.transform() }
         }
+
+    override suspend fun downloadCv(url: String): ByteArray? {
+        try {
+            val response: HttpResponse = client.get(url)
+            println("RESPONSE $response")
+            return response.bodyAsChannel().toByteArray()
+        } catch (e: Exception) {
+            return null
+        }
+    }
 
 
     companion object {

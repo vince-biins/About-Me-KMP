@@ -21,6 +21,7 @@ landscapistCoil3 = "2.4.7"
 
 material3WindowSizeClassMultiplatform = "0.5.0"
 navigationComposeVersion = "2.8.0-alpha10"
+okio = "3.10.2"
 uiTextAndroid = "1.7.8"
 kotlinStdlib = "2.1.20"
 runner = "1.6.2"
@@ -71,6 +72,8 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 landscapist-coil3 = { module = "com.github.skydoves:landscapist-coil3", version.ref = "landscapistCoil3" }
 material3-window-size-class1-multiplatform = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "material3WindowSizeClassMultiplatform" }
 navigation-compose= { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+okio-wasm = { module = "com.squareup.okio:okio-nodefilesystem", version.ref = "okio" }
 postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt" }
 realtime-kt = { module = "io.github.jan-tennert.supabase:realtime-kt" }
 ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }

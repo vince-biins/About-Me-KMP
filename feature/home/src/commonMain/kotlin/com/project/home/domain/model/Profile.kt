@@ -23,4 +23,5 @@ data class DetailedProfile(
     val age: Int,
     val location: String,
     val email: String,
+    val fileUrl: String,
 )
