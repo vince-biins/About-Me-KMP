@@ -103,6 +103,7 @@ private fun ProfileImage(
     isCircular: Boolean = true,
 ) {
     val imageSize = if (isCircular) 240.dp else 420.dp
+    val imageBgColor = MaterialTheme.colorScheme.surface
     Box(
         contentAlignment = Alignment.Center,
         modifier = if (isCircular) modifier
@@ -116,7 +117,7 @@ private fun ProfileImage(
                 shape = CircleShape
             )
             .clip(CircleShape)
-            .background(Color.White) else {
+            .background(imageBgColor) else {
             modifier.wrapContentSize()
         }
     ) {

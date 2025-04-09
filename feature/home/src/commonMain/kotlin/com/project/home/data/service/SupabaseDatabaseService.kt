@@ -61,7 +61,7 @@ class SupabaseDatabaseService : DatabaseService {
             val res = supabase.from(path)
                 .select(Columns.raw("""
                     *,
-                    skill(*,sub_skill(title))
+                    skill(*)
                 """.trimIndent())
                 ).decodeList<ExpertiseDto>()
             emit(res)

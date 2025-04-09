@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImagePainter
@@ -23,13 +24,13 @@ import coil3.compose.rememberAsyncImagePainter
 fun CoilImageWithError2(
     modifier: Modifier = Modifier,
     imageUrl: String,
-
+    contentScale: ContentScale = ContentScale.FillBounds
 ) {
     val painter = rememberAsyncImagePainter(
         model = imageUrl,
+        filterQuality = FilterQuality.High,
     )
-    println("$imageUrl - ${painter.state.value}")
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
+    Box(contentAlignment = Alignment.Center) {
         when (painter.state.collectAsState().value) {
             is AsyncImagePainter.State.Loading -> {
                 Box(
@@ -42,7 +43,6 @@ fun CoilImageWithError2(
             }
             }
             is AsyncImagePainter.State.Error -> {
-                println("Error ${(painter.state.value as AsyncImagePainter.State.Error).result.throwable}")
                 Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -59,7 +59,7 @@ fun CoilImageWithError2(
             is AsyncImagePainter.State.Success -> {
                 Image(painter = painter, contentDescription = null,
                     modifier = modifier,
-                    contentScale = ContentScale.FillBounds,
+                    contentScale = contentScale,
                 )
             }
             else ->{}

@@ -7,6 +7,7 @@ import com.project.home.data.model.DetailedProfileDto
 import com.project.home.data.model.ExperienceDto
 import com.project.home.data.model.ExpertiseDto
 import com.project.home.data.model.SkillDto
+import com.project.home.data.model.TechSkillDto
 import com.project.home.domain.model.Background
 import com.project.home.domain.model.BasicProfile
 import com.project.home.domain.model.Contact
@@ -14,6 +15,8 @@ import com.project.home.domain.model.DetailedProfile
 import com.project.home.domain.model.Experience
 import com.project.home.domain.model.Expertise
 import com.project.home.domain.model.Skill
+import com.project.home.domain.model.TechSkill
+import com.project.utils.DateHelper
 
 fun BasicProfileDto.transform() = BasicProfile(
     headerTitle = headerTitle,
@@ -27,7 +30,12 @@ fun DetailedProfileDto.transform() = DetailedProfile(
     title = title,
     description = description,
     name = name,
-    age = 1,
+    age = with(DateHelper) {
+        val date = parseDate(birthday)
+        date?.let {
+            calculateAge(date)
+        } ?: 0
+    },
     location = location,
     email = email,
     fileUrl = fileUrl,
@@ -61,4 +69,9 @@ fun ExpertiseDto.transform() = Expertise(
 fun SkillDto.transform() = Skill(
     title = title,
     subTitle = subSkills?.map { it.title } ?: emptyList(),
+)
+
+fun TechSkillDto.transform() = TechSkill (
+    title = title,
+    imageUrl = imageUrl,
 )

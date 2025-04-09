@@ -1,12 +1,6 @@
 package com.project.home.data.repository
 
 import com.project.home.data.mappers.transform
-import com.project.home.data.model.BackgroundDto
-import com.project.home.data.model.BasicProfileDto
-import com.project.home.data.model.ContactDto
-import com.project.home.data.model.DetailedProfileDto
-import com.project.home.data.model.ExpertiseDto
-import com.project.home.data.service.SupabaseDatabaseService
 import com.project.home.domain.model.Background
 import com.project.home.domain.model.BasicProfile
 import com.project.home.domain.model.Contact
@@ -20,9 +14,7 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.utils.io.toByteArray
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.serialization.builtins.ListSerializer
 
 
 class HomeRepositoryImpl(
@@ -58,7 +50,6 @@ class HomeRepositoryImpl(
     override suspend fun downloadCv(url: String): ByteArray? {
         try {
             val response: HttpResponse = client.get(url)
-            println("RESPONSE $response")
             return response.bodyAsChannel().toByteArray()
         } catch (e: Exception) {
             return null

@@ -5,5 +5,6 @@ import com.project.home.domain.model.Profile
 data class HomeState(
     val isLoading: Boolean = true,
     val profile: Profile? = null,
-    val error: String? = null
+    val error: String? = null,
+    val isRefreshing: Boolean = false,
 )

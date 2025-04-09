@@ -18,6 +18,9 @@ class HomeViewModel(
 
 ): BaseViewModel() {
 
+
+    private val _isRefreshing = MutableStateFlow(false)
+
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
@@ -38,8 +41,9 @@ class HomeViewModel(
                 safeFlow({ homeRepository.getDetailProfileData() }, null),
                 safeFlow({ homeRepository.getBackgroundData() }, emptyList()),
                 safeFlow({ homeRepository.getExpertiseData() }, emptyList()),
-                safeFlow({ homeRepository.getContactData() }, emptyList())
-            ) { basic, detail, background, skills, contact ->
+                safeFlow({ homeRepository.getContactData() }, emptyList()),
+
+            ) { basic, detail, background, skills, contact, ->
                 Profile(
                     basicProfile = basic,
                     detailedProfile = detail,
@@ -48,10 +52,10 @@ class HomeViewModel(
                     contact = contact)
             }
             profileFlow.collect { profile ->
-                _state.update { it.copy(profile = profile, isLoading = false) }
+                _state.update { it.copy(profile = profile, isLoading = false,isRefreshing = false) }
             }
         } catch (e: Exception) {
-            _state.update { it.copy(error = e.message, isLoading = false) }
+            _state.update { it.copy(error = e.message, isLoading = false,isRefreshing = false) }
         }
     }
 
@@ -70,6 +74,23 @@ class HomeViewModel(
                         saveFile(FILE_NAME, data = it)
                     }
                 }
+            }
+
+            is HomeEvent.OnRefresh -> {
+                _isRefreshing.update { true }
+                viewModelScope.launch {
+                    try {
+                        _state.update { it.copy(isLoading = true) }
+                        fetchHomeState()
+                    } catch (e: Exception) {
+                        // Handle any errors and propagate them to the event flow
+                        // _event.emit(HomeEvent.ShowError(e.message))
+                    } finally {
+
+                        _isRefreshing.update { false }
+                    }
+                }
+                _state.update { it.copy(isRefreshing = true, isLoading = true) }
             }
         }
     }

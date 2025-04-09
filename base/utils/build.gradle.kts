@@ -62,6 +62,8 @@ kotlin {
                 implementation(libs.coil.compose)
 
                 implementation(libs.okio)
+
+                implementation(libs.kotlinx.datetime)
             }
         }
 

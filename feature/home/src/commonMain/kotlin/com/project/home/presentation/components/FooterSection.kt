@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.project.theme.appTheme
+import com.project.utils.DateHelper
 
 @Composable
 fun FooterSection(
@@ -77,7 +78,7 @@ fun FooterSection(
 
         Spacer(Modifier.height(12.dp))
         Text(
-            text = "© 2025 Vince-biins. All rights reserved.",
+            text = "© ${DateHelper.getCurrentYear()} Vince-biins. All rights reserved.",
             style = appTheme.responsiveTypography.bodySmall.copy(
                 color = MaterialTheme.colorScheme.outline
             )

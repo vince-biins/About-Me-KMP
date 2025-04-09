@@ -6,8 +6,15 @@ import kotlinx.serialization.Serializable
 data class ExpertiseDto(
     val id: Int,
     val title: String,
-    val skill: List<SkillDto>,
+    val skill: List<TechSkillDto>,
     val imageUrl: String? = null,
+)
+
+@Serializable
+data class TechSkillDto(
+    val id: Int,
+    val title: String,
+    val imageUrl: String,
 )
 @Serializable
  data class SkillDto(
