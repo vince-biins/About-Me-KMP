@@ -43,6 +43,7 @@ import com.project.home.presentation.components.ExperienceSection
 import com.project.home.presentation.components.FooterSection
 import com.project.home.presentation.components.HeaderSection
 import com.project.home.presentation.components.IntroSection
+import com.project.home.presentation.components.ProjectSection
 import com.project.home.presentation.components.SkillSection
 import com.project.home.presentation.viewmodel.HeaderSectionType
 import com.project.home.presentation.viewmodel.HomeEvent
@@ -368,6 +369,17 @@ fun HomeContent(
                 scrollState = scrollState
             )
         }
+
+        item {
+            Spacer(Modifier.height(32.dp))
+            ProjectSection(
+                title = "Projects",
+                windowSize = windowSize,
+                project = profile.projects,
+                scrollState = scrollState
+            )
+        }
+
 
         item {
             Spacer(Modifier.height(32.dp))

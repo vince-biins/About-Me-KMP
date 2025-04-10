@@ -6,6 +6,7 @@ data class Profile(
     val background: List<Background>,
     val skills: List<Expertise>,
     val contact: List<Contact>,
+    val projects: List<Project>,
 )
 
 data class BasicProfile(

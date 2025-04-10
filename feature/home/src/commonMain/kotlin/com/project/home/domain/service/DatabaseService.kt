@@ -5,6 +5,7 @@ import com.project.home.data.model.BasicProfileDto
 import com.project.home.data.model.ContactDto
 import com.project.home.data.model.DetailedProfileDto
 import com.project.home.data.model.ExpertiseDto
+import com.project.home.data.model.ProjectDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.KSerializer
 
@@ -14,5 +15,6 @@ interface DatabaseService {
     fun getDetailProfile(path: String): Flow<DetailedProfileDto?>
     fun getExpertise(path: String): Flow<List<ExpertiseDto>>
     fun getExperience(path: String): Flow<List<BackgroundDto>>
+    fun getProject(path: String): Flow<List<ProjectDto>>
 
 }

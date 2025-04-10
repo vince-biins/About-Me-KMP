@@ -6,6 +6,7 @@ import com.project.home.domain.model.BasicProfile
 import com.project.home.domain.model.Contact
 import com.project.home.domain.model.DetailedProfile
 import com.project.home.domain.model.Expertise
+import com.project.home.domain.model.Project
 import com.project.home.domain.repository.HomeRepository
 import com.project.home.domain.service.DatabaseService
 import io.ktor.client.HttpClient
@@ -47,6 +48,11 @@ class HomeRepositoryImpl(
             contact.map { it.transform() }
         }
 
+    override suspend fun getProjects(): Flow<List<Project>>  =
+        supabaseDatabaseService.getProject(PROJECT_PATH).map { project ->
+            project.map { it.transform() }
+    }
+
     override suspend fun downloadCv(url: String): ByteArray? {
         try {
             val response: HttpResponse = client.get(url)
@@ -64,5 +70,6 @@ class HomeRepositoryImpl(
         val EXPERIENCE_PATH_PATH = "background"
         val EXPERTISE_PATH = "expertise"
         val CONTACT_PATH = "contact"
+        val PROJECT_PATH = "project"
     }
 }

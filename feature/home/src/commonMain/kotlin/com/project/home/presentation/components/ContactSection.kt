@@ -34,7 +34,8 @@ fun ContactSection(
     val isCompact = windowSize.widthSizeClass == WindowWidthSizeClass.Compact
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(
+        modifier =
+            modifier.padding(
             start = 16.dp,
             end = 16.dp,
             top = 16.dp,

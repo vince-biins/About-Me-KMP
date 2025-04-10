@@ -6,6 +6,7 @@ import com.project.home.data.model.ContactDto
 import com.project.home.data.model.DetailedProfileDto
 import com.project.home.data.model.ExperienceDto
 import com.project.home.data.model.ExpertiseDto
+import com.project.home.data.model.ProjectDto
 import com.project.home.data.model.SkillDto
 import com.project.home.data.model.TechSkillDto
 import com.project.home.domain.model.Background
@@ -14,6 +15,7 @@ import com.project.home.domain.model.Contact
 import com.project.home.domain.model.DetailedProfile
 import com.project.home.domain.model.Experience
 import com.project.home.domain.model.Expertise
+import com.project.home.domain.model.Project
 import com.project.home.domain.model.Skill
 import com.project.home.domain.model.TechSkill
 import com.project.utils.DateHelper
@@ -74,4 +76,12 @@ fun SkillDto.transform() = Skill(
 fun TechSkillDto.transform() = TechSkill (
     title = title,
     imageUrl = imageUrl,
+)
+
+fun ProjectDto.transform() = Project(
+    title = title,
+    description = description,
+    appUrl = url.orEmpty(),
+    imageUrl = imageUrl.orEmpty(),
+    stack = stack.split(','),
 )

@@ -2,7 +2,14 @@ package com.project.home.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.project.composables.buttons.BaseViewModel
+import com.project.home.domain.model.Background
+import com.project.home.domain.model.BasicProfile
+import com.project.home.domain.model.Contact
+import com.project.home.domain.model.DetailedProfile
+import com.project.home.domain.model.Expertise
 import com.project.home.domain.model.Profile
+import com.project.home.domain.model.Project
+import com.project.home.domain.model.Skill
 import com.project.home.domain.repository.HomeRepository
 import com.project.utils.platform.saveFile
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +23,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val homeRepository: HomeRepository,
 
-): BaseViewModel() {
+    ) : BaseViewModel() {
 
 
     private val _isRefreshing = MutableStateFlow(false)
@@ -25,7 +32,7 @@ class HomeViewModel(
     val state = _state.asStateFlow()
 
     private val _event = MutableSharedFlow<HomeEvent>()
-    val event  = _event.asSharedFlow()
+    val event = _event.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -37,30 +44,45 @@ class HomeViewModel(
     private suspend fun fetchHomeState() {
         try {
             val profileFlow = combine(
-                safeFlow({ homeRepository.getBasicProfileData() },null),
+                safeFlow({ homeRepository.getBasicProfileData() }, null),
                 safeFlow({ homeRepository.getDetailProfileData() }, null),
                 safeFlow({ homeRepository.getBackgroundData() }, emptyList()),
                 safeFlow({ homeRepository.getExpertiseData() }, emptyList()),
                 safeFlow({ homeRepository.getContactData() }, emptyList()),
+                safeFlow({ homeRepository.getProjects() }, emptyList()),
+            ) { profile ->
+                val basic = profile[0] as BasicProfile
+                val detail = profile[1] as DetailedProfile
+                val background = profile[2] as List<Background>
+                val skills = profile[3] as List<Expertise>
+                val contact = profile[4] as List<Contact>
+                val projects = profile[5] as List<Project>
 
-            ) { basic, detail, background, skills, contact, ->
                 Profile(
                     basicProfile = basic,
                     detailedProfile = detail,
                     background = background,
                     skills = skills,
-                    contact = contact)
+                    contact = contact,
+                    projects = projects,
+                )
             }
             profileFlow.collect { profile ->
-                _state.update { it.copy(profile = profile, isLoading = false,isRefreshing = false) }
+                _state.update {
+                    it.copy(
+                        profile = profile,
+                        isLoading = false,
+                        isRefreshing = false
+                    )
+                }
             }
         } catch (e: Exception) {
-            _state.update { it.copy(error = e.message, isLoading = false,isRefreshing = false) }
+            _state.update { it.copy(error = e.message, isLoading = false, isRefreshing = false) }
         }
     }
 
-    fun onEvent(uiEvent: HomeEvent ) {
-        when(uiEvent) {
+    fun onEvent(uiEvent: HomeEvent) {
+        when (uiEvent) {
             is HomeEvent.OnHeaderClicked -> {
                 viewModelScope.launch {
                     _event.emit(uiEvent)

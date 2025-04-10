@@ -11,5 +11,6 @@ enum class HeaderSectionType(val itemPosition: Int) {
     ABOUT_ME(1),
     EXPERIENCE(2),
     EXPERTISE(3),
-    CONTACT_US(4),
+    PROJECT(4),
+    CONTACT_US(5),
 }

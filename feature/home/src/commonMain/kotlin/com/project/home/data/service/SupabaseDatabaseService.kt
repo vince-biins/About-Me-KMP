@@ -5,12 +5,14 @@ import com.project.home.data.model.BasicProfileDto
 import com.project.home.data.model.ContactDto
 import com.project.home.data.model.DetailedProfileDto
 import com.project.home.data.model.ExpertiseDto
+import com.project.home.data.model.ProjectDto
 import com.project.home.domain.service.DatabaseService
 
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
+import io.github.jan.supabase.postgrest.query.Order
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -79,6 +81,19 @@ class SupabaseDatabaseService : DatabaseService {
                     "*,experience(*)"
                 )
             ).decodeList<BackgroundDto>()
+            emit(res)
+        } catch (e: Exception) {
+            println(e.message)
+            emit(emptyList())
+        }
+    }
+
+    override fun getProject(path: String): Flow<List<ProjectDto>> = flow {
+        try {
+            val res = supabase.from(path).select {
+                order(column = "priority", order = Order.DESCENDING)
+            }.decodeList<ProjectDto>()
+            println(res)
             emit(res)
         } catch (e: Exception) {
             println(e.message)
