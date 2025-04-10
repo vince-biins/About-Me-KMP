@@ -22,6 +22,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.project.home.presentation.viewmodel.HeaderSectionType
 import com.project.theme.appTheme
 import com.project.utils.DateHelper
 
@@ -29,11 +30,8 @@ import com.project.utils.DateHelper
 fun FooterSection(
     modifier: Modifier = Modifier,
     windowSize: WindowSizeClass,
-    onHomeClicked: () -> Unit,
-    onAboutClicked: () -> Unit,
-    onExperienceClicked: () -> Unit,
-    onSkillsClicked: () -> Unit,
-    onContactClicked: () -> Unit,
+    section: List<HeaderSectionType>,
+    onSectionClicked: (HeaderSectionType) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -55,11 +53,8 @@ fun FooterSection(
                 horizontalArrangement = Arrangement.Center
             ){
                 FooterNavSection(
-                    onContactClicked = onContactClicked,
-                    onHomeClicked = onHomeClicked,
-                    onExperienceClicked = onExperienceClicked,
-                    onAboutClicked = onAboutClicked,
-                    onSkillsClicked = onSkillsClicked,
+                    section = section,
+                    onSectionClicked = onSectionClicked
                 )
 
             }
@@ -89,11 +84,8 @@ fun FooterSection(
 @Composable
 private fun FooterNavSection(
     modifier: Modifier = Modifier,
-    onHomeClicked: () -> Unit,
-    onAboutClicked: () -> Unit,
-    onExperienceClicked: () -> Unit,
-    onSkillsClicked: () -> Unit,
-    onContactClicked: () -> Unit,
+    section: List<HeaderSectionType>,
+    onSectionClicked: (HeaderSectionType) -> Unit,
 ) {
     val sideBorderColor = MaterialTheme.colorScheme.onBackground
     Box(
@@ -111,26 +103,14 @@ private fun FooterNavSection(
             modifier = Modifier.padding(start = 12.dp),
             verticalArrangement = Arrangement.Bottom,
         ) {
-            TextHeaderClickable(
-                text = "Home",
-                onClick = onHomeClicked
-            )
-            TextHeaderClickable(
-                text = "About",
-                onClick = onAboutClicked
-            )
-            TextHeaderClickable(
-                text = "Experience",
-                onClick = onExperienceClicked
-            )
-            TextHeaderClickable(
-                text = "Skills",
-                onClick = onSkillsClicked
-            )
-            TextHeaderClickable(
-                text = "Contact",
-                onClick = onContactClicked
-            )
+            section.forEach {
+                TextHeaderClickable(
+                    text = it.text,
+                    onClick = {
+                        onSectionClicked(it)
+                    }
+                )
+            }
         }
     }
 }

@@ -28,6 +28,8 @@ class HomeViewModel(
 
     private val _isRefreshing = MutableStateFlow(false)
 
+    val sectionHeaders = HeaderSectionType.entries.toList()
+
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
@@ -113,6 +115,12 @@ class HomeViewModel(
                     }
                 }
                 _state.update { it.copy(isRefreshing = true, isLoading = true) }
+            }
+
+            HomeEvent.OnNavigationDrawerClicked -> {
+                viewModelScope.launch {
+                    _event.emit(uiEvent)
+                }
             }
         }
     }
