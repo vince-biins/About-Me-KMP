@@ -9,7 +9,6 @@ import com.project.home.domain.model.DetailedProfile
 import com.project.home.domain.model.Expertise
 import com.project.home.domain.model.Profile
 import com.project.home.domain.model.Project
-import com.project.home.domain.model.Skill
 import com.project.home.domain.repository.HomeRepository
 import com.project.utils.platform.saveFile
 import kotlinx.coroutines.flow.MutableSharedFlow

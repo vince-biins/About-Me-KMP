@@ -21,11 +21,11 @@ fun App() {
             )
         }
     ) {
-         setSingletonImageLoaderFactory{ context ->
+        setSingletonImageLoaderFactory { context ->
             getAsyncImageLoader(context)
         }
 
-        AboutMeTheme (darkTheme = true) {
+        AboutMeTheme(darkTheme = true) {
             val navController = rememberNavController()
             createNavGraph(navController = navController)
         }

@@ -19,11 +19,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.project.home.domain.model.Profile
 import com.project.home.presentation.components.CustomNavigationDrawer
+import com.project.home.presentation.components.CustomSplashScreen
 import com.project.home.presentation.viewmodel.HeaderSectionType
 import com.project.home.presentation.viewmodel.HomeEvent
 import com.project.home.presentation.viewmodel.HomeViewModel
@@ -35,11 +39,12 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
     val windowSize = calculateWindowSizeClass()
+    val platform by remember { mutableStateOf(platformName()) }
     val state by viewModel.state.collectAsState()
 
     val scrollState = rememberLazyListState()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-
+    var isSplashScreenVisible by remember { mutableStateOf(true) }
     LaunchedEffect(windowSize) {
         if(windowSize.widthSizeClass != WindowWidthSizeClass.Compact) {
             if (drawerState.isOpen) {
@@ -88,6 +93,7 @@ fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
                 drawerState = drawerState,
                 windowSize = windowSize,
                 profile = state.profile!!,
+                platform = platform,
                 onClickIntroAbout = {
                     viewModel.onEvent(HomeEvent.OnHeaderClicked(HeaderSectionType.ABOUT_ME))
                 },
@@ -108,15 +114,21 @@ fun HomeRoot(viewModel: HomeViewModel, navController: NavController) {
         }
 
         if (state.isLoading) {
-            Box(
-                modifier = Modifier.fillMaxSize().background(
-                    MaterialTheme.colorScheme.background.copy(
-                        alpha = 0.7f
-                    )
-                ),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
+            when(platform) {
+                Platform.DESKTOP,
+                Platform.WEB -> {
+                    CustomSplashScreen(onTimeout = { isSplashScreenVisible = false })
+                }
+                else -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize().background(
+                            MaterialTheme.colorScheme.background
+                        ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
             }
         }
     }
@@ -128,6 +140,7 @@ fun HomeScreen(
     scrollState: LazyListState,
     drawerState: DrawerState,
     windowSize: WindowSizeClass,
+    platform: Platform,
     profile: Profile,
     sections: List<HeaderSectionType>,
     onSectionClicked: (HeaderSectionType) -> Unit,
@@ -136,7 +149,7 @@ fun HomeScreen(
     onRefresh: () -> Unit,
     onDrawerClicked: () -> Unit,
 ) {
-    val platform = platformName()
+
     CustomNavigationDrawer(
         drawerState = drawerState,
         gestureEnable = windowSize.widthSizeClass == WindowWidthSizeClass.Compact,

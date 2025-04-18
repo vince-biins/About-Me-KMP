@@ -3,6 +3,7 @@ package com.project.home.presentation.components
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.project.composables.buttons.CoilImageWithError2
@@ -53,6 +55,7 @@ fun ProjectSection(
     project: List<Project>,
     scrollState: LazyListState,
 ) {
+    val uriHandler = LocalUriHandler.current
     val containerAlpha = remember { Animatable(0f) }
     val translateY = remember { Animatable(30f) }
     var isVisible by remember { mutableStateOf(false) }
@@ -94,7 +97,10 @@ fun ProjectSection(
                             isVisible = true
                         }
                     },
-                isCompact = isCompact
+                isCompact = isCompact,
+                onClick = {
+                    uriHandler.openUri(it.appUrl)
+                }
             )
         }
 
@@ -107,13 +113,16 @@ fun ProjectTile(
     modifier: Modifier = Modifier,
     project: Project,
     isCompact: Boolean,
+    onClick: () -> Unit,
 ) {
     val mod = if(isCompact) modifier else modifier.fillMaxWidth(0.5f)
     Box(
         modifier = mod.shadow(
             elevation = 4.dp,
             shape = RoundedCornerShape(ProjectSectionConstants.ROUNDED_CORNER_RADIUS)
-        )
+        ).clickable {
+            onClick()
+        }
     ) {
         Column(
             modifier = Modifier
